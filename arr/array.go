@@ -219,3 +219,14 @@ func FirstOrDefault[T comparable](def T, arr ...T) T {
 
 	return def
 }
+
+// FirstOrDefaultArr returns the first non-zero element of an array.
+func FirstOrDefaultArr[T any](def []T, arr ...[]T) []T {
+	for _, v := range arr {
+		if len(v) > 0 {
+			return v
+		}
+	}
+
+	return def
+}
