@@ -1,3 +1,3 @@
-module github.com/hieutran21198/generic
+module github.com/cirius-go/generic
 
 go 1.20

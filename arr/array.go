@@ -1,7 +1,7 @@
 package arr
 
 import (
-	"github.com/hieutran21198/generic"
+	"github.com/cirius-go/generic"
 )
 
 // Concat joins multiple slices of type T into a single slice.
