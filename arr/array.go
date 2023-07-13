@@ -230,3 +230,19 @@ func FirstOrDefaultArr[T any](def []T, arr ...[]T) []T {
 
 	return def
 }
+
+// MapTilError applies a function to each element of an array.
+func MapTilError[T, R any](callback func(T) (R, error), arr ...T) ([]R, error) {
+	result := make([]R, 0)
+
+	for _, v := range arr {
+		r, err := callback(v)
+		if err != nil {
+			return result, err
+		}
+
+		result = append(result, r)
+	}
+
+	return result, nil
+}
