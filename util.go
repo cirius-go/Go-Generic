@@ -13,3 +13,9 @@ func Zero[T any]() T {
 func IsZero[T comparable](v T) bool {
 	return v == Zero[T]()
 }
+
+// Something represents something that not important.
+type Something struct{}
+
+// SomethingIntf represents something that used to implement purpose only.
+type SomethingIntf interface{}
