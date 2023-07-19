@@ -155,6 +155,20 @@ func Reduce[T, R any](initialValue R, callback func(R, T) R, arr ...T) R {
 	return initialValue
 }
 
+// ReduceWithError reduces an array to a single value with an error
+func ReduceWithError[T, R any](initialValue R, callback func(R, T) (R, error), arr ...T) (R, error) {
+	for _, v := range arr {
+		r, err := callback(initialValue, v)
+		if err != nil {
+			return r, err
+		}
+
+		initialValue = r
+	}
+
+	return initialValue, nil
+}
+
 // Shift removes the first element of an array and returns it.
 func Shift[T any](arr ...T) []T {
 	if len(arr) == 0 {
