@@ -182,11 +182,7 @@ func Shift[T any](arr ...T) []T {
 func Clone[T any](arr []T) []T {
 	var result []T
 
-	for _, v := range arr {
-		result = append(result, v)
-	}
-
-	return result
+	return append(result, arr...)
 }
 
 // NonZero returns the non-zero elements of an array
@@ -259,4 +255,19 @@ func MapTilError[T, R any](callback func(T) (R, error), arr ...T) ([]R, error) {
 	}
 
 	return result, nil
+}
+
+func MapSkip[T, R any](callback func(T) (R, bool), arr ...T) []R {
+	result := make([]R, 0)
+
+	for _, v := range arr {
+		r, skip := callback(v)
+		if skip {
+			continue
+		}
+
+		result = append(result, r)
+	}
+
+	return result
 }
