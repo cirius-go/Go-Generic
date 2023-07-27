@@ -1,8 +1,8 @@
 package record
 
 import (
-	"github.com/cirius-go/generic"
-	"github.com/cirius-go/generic/arr"
+	"github.com/cirius-go/generic/common"
+	"github.com/cirius-go/generic/slice"
 )
 
 // Record represents the record that contains data as key & value.
@@ -37,7 +37,7 @@ func FromMap[K comparable, V any](m map[K]V) Record[K, V] {
 }
 
 func (r Record[K, V]) ApplyMap(maps ...map[K]V) Record[K, V] {
-	convertedMaps := arr.Map(func(m map[K]V) Record[K, V] {
+	convertedMaps := slice.Map(func(m map[K]V) Record[K, V] {
 		return FromMap(m)
 	}, maps...)
 
@@ -81,7 +81,7 @@ func (r Record[K, V]) Delete(names ...K) Record[K, V] {
 
 func (r Record[K, V]) SearchByKey(name K) (V, int) {
 	if r == nil {
-		return generic.Zero[V](), -1
+		return common.Zero[V](), -1
 	}
 
 	index := 0
@@ -93,7 +93,7 @@ func (r Record[K, V]) SearchByKey(name K) (V, int) {
 		index++
 	}
 
-	return generic.Zero[V](), -1
+	return common.Zero[V](), -1
 }
 
 func (r Record[K, V]) DeleteByIndexes(indexes ...int) Record[K, V] {
