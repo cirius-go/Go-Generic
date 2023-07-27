@@ -1,5 +1,7 @@
 package generic
 
+import "github.com/cirius-go/generic/arr"
+
 // Zero returns a zero value of type T.
 func Zero[T any]() T {
 	var (
@@ -19,3 +21,13 @@ type Something struct{}
 
 // SomethingIntf represents something that used to implement purpose only.
 type SomethingIntf interface{}
+
+// Select select something based on condition.
+func Select[T comparable](a, b T, selectBOpts ...bool) T {
+	selectB := arr.FirstOrDefault(false, selectBOpts...)
+	if selectB {
+		return b
+	}
+
+	return a
+}
