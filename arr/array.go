@@ -2,6 +2,7 @@ package arr
 
 import (
 	"github.com/cirius-go/generic"
+	"github.com/cirius-go/generic/arr"
 )
 
 // Concat joins multiple slices of type T into a single slice.
@@ -270,4 +271,11 @@ func MapSkip[T, R any](callback func(T) (R, bool), arr ...T) []R {
 	}
 
 	return result
+}
+
+// ToAnys converts array of type T to array of type any.
+func ToAnys[T any](items ...T) []any {
+	return arr.Map(func(item T) any {
+		return item
+	}, items...)
 }
