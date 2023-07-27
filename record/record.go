@@ -113,3 +113,28 @@ func (r Record[K, V]) DeleteByIndexes(indexes ...int) Record[K, V] {
 
 	return r
 }
+
+func (r Record[K, V]) Filter(predicate func(K, V) bool) Record[K, V] {
+	var (
+		newR = make(Record[K, V])
+	)
+
+	for k, v := range r {
+		if predicate(k, v) {
+			newR[k] = v
+		}
+	}
+
+	return newR
+}
+
+func (r Record[K, V]) Values() []V {
+	var (
+		a = []V{}
+	)
+	for _, v := range r {
+		a = append(a, v)
+	}
+
+	return a
+}
