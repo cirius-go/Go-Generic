@@ -303,3 +303,15 @@ func ToAnys[T any](items ...T) []any {
 		return item
 	}, items...)
 }
+
+func ExcludeIfIn[T comparable](sliceA []T, sliceB ...T) []T {
+	return Filter(func(itemA T) bool {
+		return !Includes(itemA, sliceB...)
+	}, sliceA...)
+}
+
+func ExcludeIfNotIn[T comparable](sliceA []T, sliceB ...T) []T {
+	return Filter(func(itemA T) bool {
+		return Includes(itemA, sliceB...)
+	}, sliceA...)
+}
