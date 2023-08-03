@@ -19,6 +19,31 @@ func Concat[T any](arrs ...[]T) []T {
 	return result
 }
 
+func ConcatUnique[T comparable](arrs ...[]T) []T {
+	joined := Concat(arrs...)
+
+	return RemoveDuplicates(joined)
+}
+
+func RemoveDuplicates[T comparable](arr []T) []T {
+	// Create a map to store unique elements
+	uniqueMap := make(map[T]bool)
+
+	// Create a new slice to store unique elements
+	uniqueArr := []T{}
+
+	// Iterate through the array and add elements to the map
+	// Only if they are not already present in the map
+	for _, num := range arr {
+		if !uniqueMap[num] {
+			uniqueMap[num] = true
+			uniqueArr = append(uniqueArr, num)
+		}
+	}
+
+	return uniqueArr
+}
+
 // Unshift adds a value to the beginning of an array
 func Unshift[T any](value T, items ...T) []T {
 	return append([]T{value}, items...)
