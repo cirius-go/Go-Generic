@@ -22,10 +22,10 @@ func Concat[T any](arrs ...[]T) []T {
 func ConcatUnique[T comparable](arrs ...[]T) []T {
 	joined := Concat(arrs...)
 
-	return RemoveDuplicates(joined)
+	return RemoveDuplicates(joined...)
 }
 
-func RemoveDuplicates[T comparable](arr []T) []T {
+func RemoveDuplicates[T comparable](arr ...T) []T {
 	// Create a map to store unique elements
 	uniqueMap := make(map[T]bool)
 
@@ -61,24 +61,24 @@ func Reverse[T any](items ...T) []T {
 }
 
 // FindIndex returns the index of the first element in the arr.
-func FindIndex[T any](predicate func(T) bool, items ...T) (index int, found bool) {
+func FindIndex[T any](predicate func(T) bool, items ...T) (index int) {
 	if predicate == nil {
-		return -1, false
+		return -1
 	}
 
 	for i, v := range items {
 		if predicate(v) {
-			return i, true
+			return i
 		}
 	}
 
-	return -1, false
+	return -1
 }
 
 // Find returns the first element in the array that satisfies the provided
 func Find[T any](predicate func(T) bool, items ...T) (value T, found bool) {
-	index, ok := FindIndex(predicate, items...)
-	if !ok || index == -1 {
+	index := FindIndex(predicate, items...)
+	if index == -1 {
 		return value, false
 	}
 
@@ -100,6 +100,21 @@ func Filter[T any](predicate func(T) bool, items ...T) []T {
 	}
 
 	return result
+}
+
+func FilterAndSeparate[T any](predicate func(T) bool, items ...T) ([]T, []T) {
+	var result = make([]T, 0)
+	var separated = make([]T, 0)
+
+	for _, v := range items {
+		if predicate(v) {
+			result = append(result, v)
+		} else {
+			separated = append(separated, v)
+		}
+	}
+
+	return result, separated
 }
 
 // Every returns true if every element in the array satisfies the provided

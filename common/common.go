@@ -19,3 +19,8 @@ type Something struct{}
 
 // SomethingIntf represents something that used to implement purpose only.
 type SomethingIntf interface{}
+
+// Pointer returns pointer of value T.
+func Pointer[T any](value T) *T {
+	return &value
+}
