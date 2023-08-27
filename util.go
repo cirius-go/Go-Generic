@@ -10,3 +10,12 @@ func Select[T any](a, b T, selectBOpts ...bool) T {
 
 	return a
 }
+
+// ValueOrInitPointer return v if v != nil, otherwise return a new instance of T
+func ValueOrInitPointer[T any](v *T) *T {
+	if v == nil {
+		return new(T)
+	}
+
+	return v
+}
