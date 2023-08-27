@@ -330,3 +330,15 @@ func ExcludeIfNotIn[T comparable](sliceA []T, sliceB ...T) []T {
 		return Includes(itemA, sliceB...)
 	}, sliceA...)
 }
+
+func Sort[T comparable](swapFn func(i, j int) bool, slice ...T) []T {
+	for i := 0; i < len(slice)-1; i++ {
+		for j := i + 1; j < len(slice); j++ {
+			if swapFn(i, j) {
+				slice[i], slice[j] = slice[j], slice[i]
+			}
+		}
+	}
+
+	return slice
+}
