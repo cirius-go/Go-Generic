@@ -2,6 +2,7 @@ package slice
 
 import (
 	"github.com/cirius-go/generic/common"
+	"github.com/cirius-go/generic/types"
 )
 
 // Concat joins multiple slices of type T into a single slice.
@@ -341,4 +342,9 @@ func Sort[T comparable](swapFn func(i, j int) bool, slice ...T) []T {
 	}
 
 	return slice
+}
+
+// ReduceMergeFn merge many elements as one.
+func ReduceMergeFn[T any, M types.MergingHandler[T]](cur M, next T) T {
+	return cur.Merge(next)
 }
