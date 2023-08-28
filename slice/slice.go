@@ -344,7 +344,12 @@ func Sort[T comparable](swapFn func(i, j int) bool, slice ...T) []T {
 	return slice
 }
 
-// ReduceMergeFn merge many elements as one.
-func ReduceMergeFn[T any, M types.MergingHandler[T]](cur M, next T) T {
+// MergeFn merge many elements as one.
+func MergeFn[T types.MergingHandler[T]](cur T, next T) T {
 	return cur.Merge(next)
+}
+
+// ReduceMergeFn merge many item as one.
+func ReduceMergeFn[T types.MergingHandler[T]](def T, slice ...T) T {
+	return Reduce(def, MergeFn[T], slice...)
 }
