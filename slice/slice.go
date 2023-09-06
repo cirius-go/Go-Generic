@@ -87,7 +87,7 @@ func Find[T any](predicate func(T) bool, items ...T) (value T, found bool) {
 
 // Filter elements of an array
 func Filter[T any](predicate func(T) bool, items ...T) []T {
-	var result = make([]T, 0)
+	result := make([]T, 0)
 
 	if predicate == nil {
 		return items
@@ -103,8 +103,8 @@ func Filter[T any](predicate func(T) bool, items ...T) []T {
 }
 
 func FilterAndSeparate[T any](predicate func(T) bool, items ...T) ([]T, []T) {
-	var result = make([]T, 0)
-	var separated = make([]T, 0)
+	result := make([]T, 0)
+	separated := make([]T, 0)
 
 	for _, v := range items {
 		if predicate(v) {
@@ -341,4 +341,15 @@ func Sort[T comparable](swapFn func(i, j int) bool, slice ...T) []T {
 	}
 
 	return slice
+}
+
+// Check all elements in b are in a
+func ArrContains[T comparable](a []T, b []T) bool {
+	for _, v := range b {
+		if !Includes(v, a...) {
+			return false
+		}
+	}
+
+	return true
 }
