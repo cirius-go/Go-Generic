@@ -343,7 +343,6 @@ func Sort[T comparable](swapFn func(i, j int) bool, slice ...T) []T {
 
 	return slice
 }
-<<<<<<< HEAD
 
 // Check all elements in b are in a
 func ArrContains[T comparable](a []T, b []T) bool {
@@ -355,8 +354,6 @@ func ArrContains[T comparable](a []T, b []T) bool {
 
 	return true
 }
-||||||| 951697f
-=======
 
 // MergeFn merge many elements as one.
 func MergeFn[T types.MergingHandler[T]](cur T, next T) T {
@@ -367,4 +364,3 @@ func MergeFn[T types.MergingHandler[T]](cur T, next T) T {
 func ReduceMergeFn[T types.MergingHandler[T]](def T, slice ...T) T {
 	return Reduce(def, MergeFn[T], slice...)
 }
->>>>>>> 556438d9b277bbed7e738a2ccc4c208fd548b57f
