@@ -19,3 +19,8 @@ func ValueOrInitPointer[T any](v *T) *T {
 
 	return v
 }
+
+// Ptr return *T
+func Ptr[T any](v T) *T {
+	return &v
+}
