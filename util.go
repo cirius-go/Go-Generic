@@ -24,3 +24,8 @@ func ValueOrInitPointer[T any](v *T) *T {
 func Ptr[T any](v T) *T {
 	return &v
 }
+
+// FromPtr return T
+func FromPtr[T any](v *T) T {
+	return *v
+}
