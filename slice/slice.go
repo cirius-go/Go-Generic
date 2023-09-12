@@ -355,6 +355,11 @@ func ArrContains[T comparable](a []T, b []T) bool {
 	return true
 }
 
+// Check all elements in b are in a
+func ContainsAll[T comparable](sliceA []T, sliceB ...T) bool {
+	return ArrContains(sliceA, sliceB)
+}
+
 // MergeFn merge many elements as one.
 func MergeFn[T types.MergingHandler[T]](cur T, next T) T {
 	return cur.Merge(next)
