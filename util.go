@@ -2,10 +2,26 @@ package generic
 
 // Select select something based on condition.
 func Select[T any](a, b T, selectBOpts ...bool) T {
-	for _, selectB := range selectBOpts {
-		if selectB {
-			return b
-		}
+	if len(selectBOpts) == 0 {
+		return a
+	}
+
+	if selectBOpts[0] {
+		return b
+	}
+
+	return a
+}
+
+// SelectA select something based on condition.
+func SelectA[T any](a, b T, selectAOpts ...bool) T {
+	if len(selectAOpts) == 0 {
+		return a
+	}
+
+	if selectAOpts[0] {
+
+		return b
 	}
 
 	return a
