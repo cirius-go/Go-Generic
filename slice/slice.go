@@ -50,6 +50,10 @@ func Unshift[T any](value T, items ...T) []T {
 	return append([]T{value}, items...)
 }
 
+func IUnshift[T any](items []T, value T) []T {
+	return Unshift(value, items...)
+}
+
 // Reverse reverses an array
 func Reverse[T any](items ...T) []T {
 	result := make([]T, 0)
@@ -67,13 +71,18 @@ func FindIndex[T any](predicate func(T) bool, items ...T) (index int) {
 		return -1
 	}
 
-	for i, v := range items {
-		if predicate(v) {
+	for i := 0; i < len(items); i++ {
+		if predicate(items[i]) {
 			return i
 		}
 	}
 
 	return -1
+}
+
+// FindIndex returns the index of the first element in the arr.
+func IFindIndex[T any](items []T, predicate func(T) bool) (index int) {
+	return FindIndex(predicate, items...)
 }
 
 // Find returns the first element in the array that satisfies the provided
@@ -84,6 +93,11 @@ func Find[T any](predicate func(T) bool, items ...T) (value T, found bool) {
 	}
 
 	return items[index], true
+}
+
+// IFind returns the first element in the array that satisfies the provided
+func IFind[T any](items []T, predicate func(T) bool) (value T, found bool) {
+	return Find(predicate, items...)
 }
 
 // Filter elements of an array
@@ -103,19 +117,31 @@ func Filter[T any](predicate func(T) bool, items ...T) []T {
 	return result
 }
 
+// IFilter returns a new array with the results of calling the provided
+func IFilter[T any](items []T, predicate func(T) bool) []T {
+	return Filter(predicate, items...)
+}
+
+// FilterAndSeparate returns filtered items and which are not satisfied
+// predicate
 func FilterAndSeparate[T any](predicate func(T) bool, items ...T) ([]T, []T) {
 	result := make([]T, 0)
 	separated := make([]T, 0)
 
-	for _, v := range items {
-		if predicate(v) {
-			result = append(result, v)
+	for i := 0; i < len(items); i++ {
+		if predicate(items[i]) {
+			result = append(result, items[i])
 		} else {
-			separated = append(separated, v)
+			separated = append(separated, items[i])
 		}
 	}
 
 	return result, separated
+}
+
+// IFilterAndSeparate alias FilterAndSeparate.
+func IFilterAndSeparate[T any](items []T, predicate func(T) bool) ([]T, []T) {
+	return FilterAndSeparate(predicate, items...)
 }
 
 // Every returns true if every element in the array satisfies the provided
@@ -124,8 +150,8 @@ func Every[T any](predicate func(T) bool, items ...T) bool {
 		return true
 	}
 
-	for _, v := range items {
-		if !predicate(v) {
+	for i := 0; i < len(items); i++ {
+		if !predicate(items[i]) {
 			return false
 		}
 	}
@@ -133,13 +159,18 @@ func Every[T any](predicate func(T) bool, items ...T) bool {
 	return true
 }
 
-// Some returns true if any element in the array satisfies the provided
+// IEvery alias Every.
+func IEvery[T any](items []T, predicate func(T) bool) bool {
+	return Every(predicate, items...)
+}
+
+// Some returns true if any element in the array satisfies the provided.
 func Some[T any](predicate func(T) bool, items ...T) bool {
 	if predicate == nil {
 		return false
 	}
-	for _, v := range items {
-		if predicate(v) {
+	for i := 0; i < len(items); i++ {
+		if predicate(items[i]) {
 			return true
 		}
 	}
@@ -147,15 +178,25 @@ func Some[T any](predicate func(T) bool, items ...T) bool {
 	return false
 }
 
+// ISome alias Some.
+func ISome[T any](items []T, predicate func(T) bool) bool {
+	return Some(predicate, items...)
+}
+
 // Map returns a new array with the results of calling the provided function
 func Map[T, R any](callback func(T) R, items ...T) []R {
 	var result []R
 
-	for _, v := range items {
-		result = append(result, callback(v))
+	for i := 0; i < len(items); i++ {
+		result = append(result, callback(items[i]))
 	}
 
 	return result
+}
+
+// IMap alias Map.
+func IMap[T, R any](items []T, callback func(T) R) []R {
+	return Map(callback, items...)
 }
 
 // At returns the value at the given index
@@ -167,6 +208,11 @@ func At[T any](index int, items ...T) (T, bool) {
 	return items[index], true
 }
 
+// IAt alias At.
+func IAt[T any](items []T, index int) (T, bool) {
+	return At(index, items...)
+}
+
 // Includes returns true if the array includes the value
 func Includes[T comparable](value T, items ...T) bool {
 	for _, v := range items {
@@ -176,6 +222,11 @@ func Includes[T comparable](value T, items ...T) bool {
 	}
 
 	return false
+}
+
+// IIncludes alias Includes.
+func IIncludes[T comparable](items []T, value T) bool {
+	return Includes(value, items...)
 }
 
 // Pop removes the last element of an array and returns it.
@@ -196,6 +247,11 @@ func Reduce[T, R any](initialValue R, callback func(R, T) R, items ...T) R {
 	return initialValue
 }
 
+// IReduce alias Reduce.
+func IReduce[T, R any](items []T, initialValue R, callback func(R, T) R) R {
+	return Reduce(initialValue, callback, items...)
+}
+
 // ReduceWithError reduces an array to a single value with an error
 func ReduceWithError[T, R any](initialValue R, callback func(R, T) (R, error), items ...T) (R, error) {
 	for _, v := range items {
@@ -208,6 +264,11 @@ func ReduceWithError[T, R any](initialValue R, callback func(R, T) (R, error), i
 	}
 
 	return initialValue, nil
+}
+
+// IReduceWithError alias ReduceWithError.
+func IReduceWithError[T, R any](items []T, initialValue R, callback func(R, T) (R, error)) (R, error) {
+	return ReduceWithError(initialValue, callback, items...)
 }
 
 // Shift removes the first element of an array and returns it.
@@ -298,6 +359,11 @@ func MapTilError[T, R any](callback func(T) (R, error), items ...T) ([]R, error)
 	return result, nil
 }
 
+func IMapTilError[T, R any](items []T, callback func(T) (R, error)) ([]R, error) {
+	return MapTilError(callback, items...)
+}
+
+// MapSkip applies a function to each element of an array
 func MapSkip[T, R any](callback func(T) (R, bool), items ...T) []R {
 	result := make([]R, 0)
 
@@ -311,6 +377,11 @@ func MapSkip[T, R any](callback func(T) (R, bool), items ...T) []R {
 	}
 
 	return result
+}
+
+// IMapSkip alias MapSkip.
+func IMapSkip[T, R any](items []T, callback func(T) (R, bool)) []R {
+	return MapSkip(callback, items...)
 }
 
 // ToAnys converts array of type T to array of type any.
