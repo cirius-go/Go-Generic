@@ -95,9 +95,26 @@ func Find[T any](predicate func(T) bool, items ...T) (value T, found bool) {
 	return items[index], true
 }
 
+// FindOrDefault find the first element in the array that satisfies the provided.
+// If not found, return the default value
+func FindOrDefault[T any](predicate func(T) bool, items ...T) (value T) {
+	index := FindIndex(predicate, items...)
+	if index == -1 {
+		return value
+	}
+
+	return items[index]
+}
+
 // IFind returns the first element in the array that satisfies the provided
 func IFind[T any](items []T, predicate func(T) bool) (value T, found bool) {
 	return Find(predicate, items...)
+}
+
+// IFindOrDefault find the first element in the array that satisfies the
+// provided. If not found, return the default value.
+func IFindOrDefault[T any](items []T, predicate func(T) bool) (value T) {
+	return FindOrDefault(predicate, items...)
 }
 
 // Filter elements of an array
