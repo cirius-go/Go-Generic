@@ -1,6 +1,11 @@
 package slice
 
 import (
+	"crypto/rand"
+	"fmt"
+	"math/big"
+	"time"
+
 	"github.com/cirius-go/generic/common"
 	"github.com/cirius-go/generic/types"
 )
@@ -456,4 +461,47 @@ func MergeFn[T types.MergingHandler[T]](cur T, next T) T {
 // ReduceMergeFn merge many item as one.
 func ReduceMergeFn[T types.MergingHandler[T]](def T, slice ...T) T {
 	return Reduce(def, MergeFn[T], slice...)
+}
+
+// GetRandomArray returns random array from origin.
+func GetRandomArray[T any](items []T, size int) []T {
+	if size >= len(items) {
+		return items
+	}
+
+	// Shuffle the array using Fisher-Yates algorithm with crypto/rand
+	shuffledItems := Shuffle(items)
+
+	// Select the first 'size' elements as the random array
+	return shuffledItems[:size]
+}
+
+// Shuffle items in array.
+func Shuffle[T any](arr []T) []T {
+	shuffled := make([]T, len(arr))
+	copy(shuffled, arr)
+
+	for i := len(shuffled) - 1; i > 0; i-- {
+		j, err := cryptoRandInt(i + 1)
+		if err != nil {
+			panic(err)
+		}
+		shuffled[i], shuffled[j] = shuffled[j], shuffled[i]
+	}
+
+	return shuffled
+}
+
+func cryptoRandInt(max int) (int, error) {
+	if max <= 0 {
+		return 0, fmt.Errorf("max should be greater than 0")
+	}
+
+	// Generate a random number within the specified range
+	randomValue, err := rand.Int(rand.Reader, big.NewInt(int64(max)))
+	if err != nil {
+		return 0, err
+	}
+
+	return int(randomValue.Int64()), nil
 }
