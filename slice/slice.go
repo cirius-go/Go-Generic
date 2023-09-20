@@ -4,7 +4,6 @@ import (
 	"crypto/rand"
 	"fmt"
 	"math/big"
-	"time"
 
 	"github.com/cirius-go/generic/common"
 	"github.com/cirius-go/generic/types"
@@ -482,7 +481,7 @@ func Shuffle[T any](arr []T) []T {
 	copy(shuffled, arr)
 
 	for i := len(shuffled) - 1; i > 0; i-- {
-		j, err := cryptoRandInt(i + 1)
+		j, err := CryptoRandInt(i + 1)
 		if err != nil {
 			panic(err)
 		}
@@ -492,7 +491,7 @@ func Shuffle[T any](arr []T) []T {
 	return shuffled
 }
 
-func cryptoRandInt(max int) (int, error) {
+func CryptoRandInt(max int) (int, error) {
 	if max <= 0 {
 		return 0, fmt.Errorf("max should be greater than 0")
 	}
