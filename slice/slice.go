@@ -504,3 +504,17 @@ func CryptoRandInt(max int) (int, error) {
 
 	return int(randomValue.Int64()), nil
 }
+
+// Loop applies a function to each element of an array
+func Loop[T any](callback func(index int, item T), items ...T) {
+	for i := 0; i < len(items); i++ {
+		callback(i, items[i])
+	}
+}
+
+// ILoop alias Loop.
+func ILoop[T any](items []T, callback func(index int, item T)) {
+	for i := 0; i < len(items); i++ {
+		callback(i, items[i])
+	}
+}
