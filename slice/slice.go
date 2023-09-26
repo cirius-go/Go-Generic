@@ -16,7 +16,8 @@ import (
 func Concat[T any](arrs ...[]T) []T {
 	result := make([]T, 0)
 
-	for _, arr := range arrs {
+	for i := range arrs {
+		arr := arrs[i]
 		if arr == nil {
 			continue
 		}
@@ -199,7 +200,9 @@ func Filter[T any](predicate func(T) bool, items ...T) []T {
 		return items
 	}
 
-	for _, v := range items {
+	for i := range items {
+		v := items[i]
+
 		if predicate(v) {
 			result = append(result, v)
 		}
@@ -383,7 +386,9 @@ func IAt[T any](items []T, index int) (T, bool) {
 // Returns:
 // - bool: True if the value is found in the list, false otherwise.
 func Includes[T comparable](value T, items ...T) bool {
-	for _, v := range items {
+	for i := range items {
+		v := items[i]
+
 		if v == value {
 			return true
 		}
@@ -426,7 +431,9 @@ func Pop[T any](items ...T) []T {
 //
 // Returns the final value of the accumulator.
 func Reduce[T, R any](initialValue R, callback func(R, T) R, items ...T) R {
-	for _, v := range items {
+	for i := range items {
+		v := items[i]
+
 		initialValue = callback(initialValue, v)
 	}
 
@@ -454,7 +461,9 @@ func IReduce[T, R any](items []T, initialValue R, callback func(R, T) R) R {
 // - R: The reduced value.
 // - error: An error that occurred during the reduction, if any.
 func ReduceWithError[T, R any](initialValue R, callback func(R, T) (R, error), items ...T) (R, error) {
-	for _, v := range items {
+	for i := range items {
+		v := items[i]
+
 		r, err := callback(initialValue, v)
 		if err != nil {
 			return r, err
@@ -512,7 +521,8 @@ func NonZero[T comparable](items ...T) []T {
 		return res
 	}
 
-	for _, v := range items {
+	for i := range items {
+		v := items[i]
 		if common.IsZero(v) {
 			continue
 		}
@@ -532,7 +542,9 @@ func FisrtNonZero[T comparable](items ...T) (T, bool) {
 		return common.Zero[T](), false
 	}
 
-	for _, v := range items {
+	for i := range items {
+		v := items[i]
+
 		if common.IsZero(v) {
 			continue
 		}
@@ -565,7 +577,8 @@ func FirstOrDefault[T comparable](def T, items ...T) T {
 // []T: the type of the arrays.
 // []T: the type of the returned array.
 func FirstOrDefaultArr[T any](def []T, items ...[]T) []T {
-	for _, v := range items {
+	for i := range items {
+		v := items[i]
 		if len(v) > 0 {
 			return v
 		}
@@ -580,7 +593,9 @@ func FirstOrDefaultArr[T any](def []T, items ...[]T) []T {
 func MapTilError[T, R any](callback func(T) (R, error), items ...T) ([]R, error) {
 	result := make([]R, 0)
 
-	for _, v := range items {
+	for i := range items {
+		v := items[i]
+
 		r, err := callback(v)
 		if err != nil {
 			return result, err
@@ -612,7 +627,9 @@ func IMapTilError[T, R any](items []T, callback func(T) (R, error)) ([]R, error)
 func MapSkip[T, R any](callback func(T) (R, bool), items ...T) []R {
 	result := make([]R, 0)
 
-	for _, v := range items {
+	for i := range items {
+		v := items[i]
+
 		r, skip := callback(v)
 		if skip {
 			continue
@@ -699,7 +716,8 @@ func Sort[T comparable](swapFn func(i, j int) bool, slice ...T) []T {
 // Return:
 // - bool: True if all elements in slice b are included in slice a, false otherwise.
 func ArrContains[T comparable](a []T, b []T) bool {
-	for _, v := range b {
+	for i := range b {
+		v := b[i]
 		if !Includes(v, a...) {
 			return false
 		}
