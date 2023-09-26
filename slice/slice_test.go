@@ -51,6 +51,18 @@ func TestContainsAll(t *testing.T) {
 	if result != expected {
 		t.Errorf("Expected %v but got %v", expected, result)
 	}
+
+	func(t *testing.T) {
+		sliceA := []string{
+			"surname", "given_name", "type_id", "total_visit", "referral_code", "mobile", "updated_at",
+		}
+		sliceB := []string{}
+		expected = true
+		result = ContainsAll(sliceA, sliceB...)
+		if result != expected {
+			t.Errorf("Expected %v but got %v", expected, result)
+		}
+	}(t)
 }
 
 func TestConcat(t *testing.T) {

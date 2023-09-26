@@ -716,6 +716,10 @@ func Sort[T comparable](swapFn func(i, j int) bool, slice ...T) []T {
 // Return:
 // - bool: True if all elements in slice b are included in slice a, false otherwise.
 func ArrContains[T comparable](a []T, b []T) bool {
+	if len(b) == 0 {
+		return true
+	}
+
 	for i := range b {
 		v := b[i]
 		if !Includes(v, a...) {
