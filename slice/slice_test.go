@@ -741,3 +741,32 @@ func TestReduce(t *testing.T) {
 		t.Errorf("Reduce() = %v, want %v", resultFloat, expectedResultFloat)
 	}
 }
+
+func TestDevide(t *testing.T) {
+	// Test case 1: to is equal to the length of items
+	to1 := 3
+	items1 := []int{1, 2, 3, 4, 5, 6}
+	expected1 := [][]int{{1, 2, 3}, {4, 5, 6}}
+	result1 := Devide(to1, items1...)
+	if !reflect.DeepEqual(result1, expected1) {
+		t.Errorf("Test case 1 failed: expected %+v, but got %+v", expected1, result1)
+	}
+
+	// Test case 2: to is greater than the length of items
+	to2 := 4
+	items2 := []string{"a", "b", "c"}
+	expected2 := [][]string{{"a", "b", "c"}}
+	result2 := Devide(to2, items2...)
+	if !reflect.DeepEqual(result2, expected2) {
+		t.Errorf("Test case 2 failed: expected %+v, but got %+v", expected2, result2)
+	}
+
+	// Test case 3: to is less than the length of items
+	to3 := 2
+	items3 := []float64{1.1, 2.2, 3.3, 4.4, 5.5}
+	expected3 := [][]float64{{1.1, 2.2}, {3.3, 4.4}, {5.5}}
+	result3 := Devide(to3, items3...)
+	if !reflect.DeepEqual(result3, expected3) {
+		t.Errorf("Test case 3 failed: expected %+v, but got %+v", expected3, result3)
+	}
+}
