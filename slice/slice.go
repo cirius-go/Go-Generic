@@ -884,9 +884,9 @@ func SPipe[T any](items []T, callbacks ...PipeFn[T]) []T {
 	return result
 }
 
-// Devide slices the given items into smaller slices of size to.
+// Divide slices the given items into smaller slices of size to.
 // It returns a slice of slices where each inner slice has a maximum size of to.
-func Devide[T any](to int, items ...T) [][]T {
+func Divide[T any](to int, items ...T) [][]T {
 	// Calculate the number of smaller slices needed
 	numSlices := (len(items) + to - 1) / to
 
