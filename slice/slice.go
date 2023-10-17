@@ -904,3 +904,15 @@ func Divide[T any](to int, items ...T) [][]T {
 
 	return result
 }
+
+func ExcludeByIndex[T any](arr []T, indices []int) []T {
+	excluded := []T{}
+
+	for index, item := range arr {
+		if !IIncludes(indices, index) {
+			excluded = append(excluded, item)
+		}
+	}
+
+	return excluded
+}
