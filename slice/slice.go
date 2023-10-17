@@ -916,3 +916,20 @@ func ExcludeByIndex[T any](arr []T, indices []int) []T {
 
 	return excluded
 }
+
+// Intersection finds the intersection of two integer slices.
+func Intersection[T comparable](a, b []T) []T {
+	set := make(map[T]*struct{})
+	for _, v := range a {
+		set[v] = new(struct{})
+	}
+
+	var result []T
+	for _, v := range b {
+		if _, exists := set[v]; exists {
+			result = append(result, v)
+		}
+	}
+
+	return result
+}
