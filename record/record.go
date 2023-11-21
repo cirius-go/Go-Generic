@@ -37,6 +37,18 @@ func Vals[K comparable, V any](m map[K]V) []V {
 	return result
 }
 
+func ValByKeys[K comparable, V any](m map[K]V, keys ...K) []V {
+	result := make([]V, 0)
+
+	for _, k := range keys {
+		if v, ok := m[k]; ok {
+			result = append(result, v)
+		}
+	}
+
+	return result
+}
+
 type ValidKeyCondFn[K comparable] func(k K) bool
 
 func ValsByKeyConds[K comparable, V any](m map[K]V, keyConds ...func(K) bool) []V {
@@ -57,4 +69,12 @@ func ValsByKeyConds[K comparable, V any](m map[K]V, keyConds ...func(K) bool) []
 	}
 
 	return result
+}
+
+func Reduce[R any, K comparable, V any](init R, fn func(R, K, V) R, m map[K]V) R {
+	for k, v := range m {
+		init = fn(init, k, v)
+	}
+
+	return init
 }
