@@ -78,3 +78,9 @@ func Reduce[R any, K comparable, V any](init R, fn func(R, K, V) R, m map[K]V) R
 
 	return init
 }
+
+func ReduceToSlice[R any, K comparable, V any](init []R, fn func(K, V) R, m map[K]V) []R {
+	return Reduce(init, func(res []R, k K, v V) []R {
+		return append(res, fn(k, v))
+	}, m)
+}
