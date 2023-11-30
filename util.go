@@ -45,3 +45,13 @@ func Ptr[T any](v T) *T {
 func FromPtr[T any](v *T) T {
 	return *v
 }
+
+// Must is a helper function that panics if an error is not nil.
+// It returns the value v if the error is nil.
+func Must[T any](v T, err error) T {
+	if err != nil {
+		panic(err)
+	}
+
+	return v
+}
