@@ -75,15 +75,22 @@ func RemoveDuplicates[T comparable](arr ...T) []T {
 type CompareFn[T any] func(T, T) bool
 
 func UniqueElem[T any](fn CompareFn[T], arr ...T) []T {
-	var result []T
-	for i := 0; i < len(arr); i++ {
-		item := arr[i]
+	result := make([]T, 0, len(arr))
+	for _, item := range arr {
+		exist := false
 
-		if len(result) == 0 || !fn(result[len(result)-1], item) {
+		for _, v := range result {
+			if fn(item, v) {
+				exist = true
+				break
+			}
+		}
+
+		if !exist {
 			result = append(result, item)
 		}
-	}
 
+	}
 	return result
 }
 
