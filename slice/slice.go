@@ -72,6 +72,20 @@ func RemoveDuplicates[T comparable](arr ...T) []T {
 	return uniqueArr
 }
 
+type CompareFn[T any] func(T, T) bool
+
+func UniqueSlice[T any](fn CompareFn[T], arr ...T) []T {
+	var result []T
+	for i := 0; i < len(arr); i++ {
+		item := arr[i]
+
+		if !fn(result[len(result)-1], item) {
+			result = append(result, item)
+		}
+	}
+	return result
+}
+
 // Unshift adds an element to the beginning of a slice.
 //
 // The first parameter, value, is the element to be added to the slice.
